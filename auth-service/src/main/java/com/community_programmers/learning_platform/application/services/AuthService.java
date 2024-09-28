@@ -1,4 +1,4 @@
-package com.community_programmers.learning_platform.application;
+package com.community_programmers.learning_platform.application.services;
 
 import com.community_programmers.learning_platform.application.requests.SignInRequest;
 import com.community_programmers.learning_platform.application.requests.SignUpRequest;

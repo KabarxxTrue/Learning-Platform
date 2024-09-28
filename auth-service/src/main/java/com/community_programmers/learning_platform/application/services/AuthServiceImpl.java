@@ -1,4 +1,4 @@
-package com.community_programmers.learning_platform.application;
+package com.community_programmers.learning_platform.application.services;
 
 import com.community_programmers.learning_platform.application.requests.SignInRequest;
 import com.community_programmers.learning_platform.application.requests.SignUpRequest;
@@ -24,14 +24,15 @@ public class AuthServiceImpl implements AuthService {
         if (userRepository.findByUsernameOrEmail(request.getUsername(), request.getEmail()).isPresent())
             throw new BadCredentialsException("User already exists with this username or email.");
 
-        User newUser = domainAuthService.register(request.getUsername(), request.getEmail(), request.getPassword(), passwordEncoder);
+        User newUser = domainAuthService.register(request.getUsername(), request.getEmail(),
+                request.getPassword(), request.getRole(), passwordEncoder);
 
         return userRepository.save(newUser);
     }
 
     @Override
     public User login(SignInRequest request) {
-        User user = userRepository.findByEmail(request.getEmail())
+        User user = userRepository.findByEmail(request.getUsername())
                 .orElseThrow(() -> new BadCredentialsException("Invalid username or email."));
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword()))
