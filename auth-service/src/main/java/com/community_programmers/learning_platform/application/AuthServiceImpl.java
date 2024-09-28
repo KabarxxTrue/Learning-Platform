@@ -1,4 +1,4 @@
-package com.community_programmers.learning_platform.application.services;
+package com.community_programmers.learning_platform.application;
 
 import com.community_programmers.learning_platform.application.requests.SignInRequest;
 import com.community_programmers.learning_platform.application.requests.SignUpRequest;
@@ -31,7 +31,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public User login(SignInRequest request) {
-        User user = userRepository.findByEmailAndPassword(request.getEmail(), request.getPassword())
+        User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new BadCredentialsException("Invalid username or email."));
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword()))

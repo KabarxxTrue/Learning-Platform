@@ -2,7 +2,7 @@ package com.community_programmers.learning_platform.ui;
 
 import com.community_programmers.learning_platform.application.requests.SignInRequest;
 import com.community_programmers.learning_platform.application.requests.SignUpRequest;
-import com.community_programmers.learning_platform.application.services.AuthService;
+import com.community_programmers.learning_platform.application.AuthService;
 import com.community_programmers.learning_platform.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
