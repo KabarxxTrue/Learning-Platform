@@ -1,5 +1,6 @@
 package com.community_programmers.learning_platform.application.requests;
 
+import com.community_programmers.learning_platform.domain.UserRolesEnum;
 import jakarta.validation.constraints.Email;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,4 +12,5 @@ public class SignUpRequest {
     private String password;
     @Email
     private String email;
+    private UserRolesEnum role;
 }

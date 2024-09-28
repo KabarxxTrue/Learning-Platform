@@ -2,16 +2,17 @@ package com.community_programmers.learning_platform.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.Collections;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -33,12 +34,21 @@ public class User {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "role")
+    @Enumerated(EnumType.STRING)
+    private UserRolesEnum role;
+
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singletonList(new SimpleGrantedAuthority(role.name()));
+    }
+
     public static User createNewUser(String email, String username, String rawPassword,
-                                     PasswordEncoder encoder) {
+                                     UserRolesEnum role, PasswordEncoder encoder) {
         return User.builder()
                 .email(email)
                 .username(username)
                 .password(encoder.encode(rawPassword))
+                .role(UserRolesEnum.USER)
                 .build();
     }
 }
