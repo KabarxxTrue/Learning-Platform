@@ -3,7 +3,6 @@ package com.community_programmers.learning_platform.security;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureException;
-import jakarta.annotation.Nullable;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.Ordered;
 import org.springframework.http.HttpHeaders;
@@ -37,8 +36,10 @@ public class JwtFilter implements WebFilter, Ordered {
                     .parseClaimsJws(token)
                     .getBody();
 
-            exchange.getRequest().mutate().header("userId", String.valueOf(claims.get("userId")))
+            exchange = exchange.mutate().request(request.mutate().header("userId", String.valueOf(claims.get("userId")))
+                    .build())
                     .build();
+
         } catch (SignatureException e) {
             return Mono.error(new RuntimeException("Invalid JWT"));
         } catch (Exception e) {
