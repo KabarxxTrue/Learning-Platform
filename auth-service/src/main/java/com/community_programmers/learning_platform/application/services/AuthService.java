@@ -1,10 +1,10 @@
 package com.community_programmers.learning_platform.application.services;
 
-import com.community_programmers.learning_platform.application.requests.SignInRequest;
-import com.community_programmers.learning_platform.application.requests.SignUpRequest;
-import com.community_programmers.learning_platform.domain.User;
+import com.community_programmers.learning_platform.application.dto.AuthResponse;
+import com.community_programmers.learning_platform.application.dto.SignInRequest;
+import com.community_programmers.learning_platform.application.dto.SignUpRequest;
 
 public interface AuthService {
-    User register(SignUpRequest request);
-    User login(SignInRequest request);
+    AuthResponse register(SignUpRequest request);
+    AuthResponse login(SignInRequest request);
 }

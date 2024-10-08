@@ -38,6 +38,13 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserRolesEnum role;
 
+    public User (String username, String password, String email, UserRolesEnum role) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.role = role;
+    }
+
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singletonList(new SimpleGrantedAuthority(role.name()));
     }

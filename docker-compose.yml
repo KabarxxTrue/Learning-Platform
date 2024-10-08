@@ -1,0 +1,42 @@
+services:
+  auth-service:
+    build: ./auth-service
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://database-auth-service:5432/auth_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_SHOW_SQL: "true"
+    depends_on:
+      - database-auth-service
+    ports:
+      - "8081:8080"
+    networks:
+      - backend
+
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "8082:8080"
+    networks:
+      - backend
+
+  database-auth-service:
+    image: postgres:16-alpine
+    environment:
+       POSTGRES_DB: auth_db
+       POSTGRES_USER: postgres
+       POSTGRES_PASSWORD: postgres
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge
+
+volumes:
+  db_data:
