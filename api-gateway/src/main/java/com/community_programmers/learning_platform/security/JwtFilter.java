@@ -26,6 +26,10 @@ public class JwtFilter extends AbstractGatewayFilterFactory<JwtFilter.Config> {
         return (exchange, chain) -> {
             ServerHttpRequest request = exchange.getRequest();
 
+            if (request.getURI().getPath().matches("/api/auth/register|/api/auth/login")) {
+                return chain.filter(exchange);
+            }
+
             if (!request.getHeaders().containsKey(HttpHeaders.AUTHORIZATION))
                 return Mono.error(new RuntimeException("Authorization header missing"));
 
